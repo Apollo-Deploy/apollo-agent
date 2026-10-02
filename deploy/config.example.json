@@ -1,0 +1,15 @@
+{
+  "identity": "/etc/apollo-agent/node-enrollment.json",
+  "ca_file": "/etc/apollo-agent/control-ca.pem",
+  "telemetry_credentials": "/etc/apollo-agent/telemetry.creds",
+  "control_public_key": "/etc/apollo-agent/control-public-key.bin",
+  "ingest_public_key": "/etc/apollo-agent/ingest-public-key.bin",
+  "assignments": "/etc/apollo-agent/assignments.pb",
+  "mappings": "/run/apollo-agent/runtime-mappings.json",
+  "state_directory": "/var/lib/apollo-agent",
+  "logd_socket": "/run/apollo-logd/capture.sock",
+  "logd_uid": null,
+  "logd_gid": null,
+  "sample_interval_ms": 1000,
+  "assignment_source": "control_plane"
+}

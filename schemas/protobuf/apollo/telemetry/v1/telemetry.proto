@@ -1,0 +1,191 @@
+syntax = "proto3";
+package apollo.telemetry.v1;
+
+// Telemetry authority is issued by the control plane, never by the node.
+// No tenant identity or runtime host path is accepted in telemetry payloads.
+message WorkloadAssignment {
+  string workload_id = 1;
+  string placement_id = 2;
+  uint64 generation = 3;
+  bytes desired_workload_sha256 = 4;
+  repeated bytes log_stream_ids = 5;
+  reserved 6;
+  // Opaque local capture identity carried by logd's fixed-size Descriptor.
+  bytes local_workload_id = 7;
+}
+message AssignmentSnapshot {
+  uint32 protocol_major = 1;
+  string node_id = 2;
+  uint64 credential_generation = 3;
+  bytes node_public_key = 4;
+  uint64 revision = 5;
+  int64 issued_at_unix_ms = 6;
+  int64 expires_at_unix_ms = 7;
+  repeated WorkloadAssignment workloads = 8;
+  // Ed25519("apollo.telemetry.assignment.v1\0" || canonical unsigned bytes).
+  bytes signature = 9;
+}
+// Read-only request authenticated with the existing enrolled node key. The
+// control plane derives every binding from PostgreSQL, never from this body.
+message AssignmentRequest {
+  uint32 protocol_major = 1;
+  string node_id = 2;
+  uint64 credential_generation = 3;
+  bytes request_id = 4;
+  int64 sent_at_unix_ms = 5;
+  bytes signature = 6;
+}
+message CpuCounters {
+  uint64 usage_usec = 1;
+  optional uint64 user_usec = 2;
+  optional uint64 system_usec = 3;
+  optional uint64 nr_throttled = 4;
+  optional uint64 throttled_usec = 5;
+  optional double core_equivalents = 6;
+}
+message MemoryCounters {
+  uint64 current_bytes = 1;
+  optional uint64 limit_bytes = 2;
+  optional uint64 anon_bytes = 3;
+  optional uint64 file_bytes = 4;
+  uint64 high = 5;
+  uint64 max = 6;
+  uint64 oom = 7;
+  uint64 oom_kill = 8;
+  bool events_hierarchical = 9;
+}
+message IoCounters {
+  uint64 rbytes = 1;
+  uint64 wbytes = 2;
+  uint64 rios = 3;
+  uint64 wios = 4;
+}
+message PidCounters {
+  uint64 current = 1;
+  optional uint64 limit = 2;
+  uint64 max_events = 3;
+}
+message Pressure {
+  double avg10 = 1;
+  double avg60 = 2;
+  double avg300 = 3;
+  uint64 total_usec = 4;
+}
+message PressureCounters {
+  Pressure some = 1;
+  Pressure full = 2;
+}
+message NetworkCounters {
+  uint64 rx_bytes = 1;
+  uint64 tx_bytes = 2;
+  uint64 rx_packets = 3;
+  uint64 tx_packets = 4;
+  uint64 rx_dropped = 5;
+  uint64 tx_dropped = 6;
+}
+message MetricSample {
+  uint32 assignment_slot = 1;
+  int64 timestamp_unix_ms = 2;
+  CpuCounters cpu = 3;
+  MemoryCounters memory = 4;
+  IoCounters io = 5;
+  PidCounters pids = 6;
+  PressureCounters cpu_pressure = 7;
+  PressureCounters memory_pressure = 8;
+  PressureCounters io_pressure = 9;
+  NetworkCounters network = 10;
+  bool counter_reset = 11;
+}
+message MetricBatch {
+  uint64 sequence = 1;
+  repeated MetricSample samples = 2;
+  uint64 coalesced_intervals = 3;
+  int64 coverage_start_unix_ms = 4;
+}
+enum EventKind {
+  EVENT_KIND_UNSPECIFIED = 0;
+  EVENT_KIND_WORKLOAD_OOM = 1;
+  EVENT_KIND_PID_LIMIT_REACHED = 2;
+  EVENT_KIND_CPU_THROTTLED = 3;
+  EVENT_KIND_COLLECTION_DEGRADED = 4;
+  EVENT_KIND_LOGD_DEGRADED = 5;
+}
+message ResourceEvent {
+  bytes event_id = 1;
+  uint32 assignment_slot = 2;
+  EventKind kind = 3;
+  int64 timestamp_unix_ms = 4;
+  uint64 counter_delta = 5;
+  uint64 memory_current = 6;
+  optional uint64 memory_limit = 7;
+}
+message EventBatch { repeated ResourceEvent events = 1; }
+message LogBatch {
+  bytes stream_id = 1;
+  uint64 generation = 2;
+  uint64 first_sequence = 3;
+  uint64 last_sequence = 4;
+  // Exact shared ALR1 records, including gap/close metadata and CRCs.
+  bytes encoded_records = 5;
+}
+message Heartbeat {
+  string agent_version = 1;
+  uint32 active_mappings = 2;
+  uint64 dropped_metric_intervals = 3;
+  uint32 pending_critical_events = 4;
+  bool logd_connected = 5;
+  // This implementation advertises telemetry only, never workload lifecycle.
+  bool workload_lifecycle = 6;
+  uint64 critical_event_delivery_failures = 7;
+}
+message ClientFrame {
+  uint32 protocol_major = 1;
+  string node_id = 2;
+  uint64 credential_generation = 3;
+  uint64 assignment_revision = 4;
+  // Agent process incarnation, fresh on each start; not Linux kernel boot_id.
+  bytes boot_id = 5;
+  bytes message_id = 6;
+  int64 sent_at_unix_ms = 7;
+  oneof body {
+    Heartbeat heartbeat = 10;
+    MetricBatch metrics = 11;
+    EventBatch events = 12;
+    LogBatch logs = 13;
+  }
+  // Ed25519("apollo.telemetry.client.v1\0" || canonical unsigned bytes).
+  bytes signature = 20;
+}
+enum AckKind {
+  ACK_KIND_UNSPECIFIED = 0;
+  ACK_KIND_HEARTBEAT = 1;
+  ACK_KIND_METRICS = 2;
+  ACK_KIND_EVENTS = 3;
+  ACK_KIND_LOGS = 4;
+}
+message DurableAck {
+  uint32 protocol_major = 1;
+  string node_id = 2;
+  uint64 credential_generation = 3;
+  uint64 assignment_revision = 4;
+  bytes boot_id = 5;
+  bytes message_id = 6;
+  AckKind kind = 7;
+  bytes stream_id = 8;
+  uint64 generation = 9;
+  uint64 cumulative_sequence = 10;
+  int64 issued_at_unix_ms = 11;
+  bool durable = 12;
+  // Ed25519("apollo.telemetry.ack.v1\0" || canonical unsigned bytes).
+  bytes signature = 20;
+}
+// Private agent journal envelope. This is never node authority at ingest.
+message JournalEvent {
+  ClientFrame delivery = 1;
+  WorkloadAssignment assignment = 2;
+}
+// Durable ingest stores the server-resolved workload scope alongside an event.
+message StoredEvent {
+  WorkloadAssignment assignment = 1;
+  ResourceEvent event = 2;
+}

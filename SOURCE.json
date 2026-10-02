@@ -1,0 +1,252 @@
+{
+  "source_repository": "https://github.com/Apollo-Deploy/Apollo-Deployment-API",
+  "source_head": "2ec9bf3bd88d8ddc814284f739beea2512abab29",
+  "source_state": "working tree snapshot; files may differ from source HEAD",
+  "unchanged_files": [
+    {
+      "source": "apollo-agent/src/cgroup/cpu.rs",
+      "destination": "src/cgroup/cpu.rs",
+      "sha256": "4480882c7ee0512c0b37b72f1faabfba92ca049b4cc4cc46b4437d8c03ec0e53"
+    },
+    {
+      "source": "apollo-agent/src/cgroup/io.rs",
+      "destination": "src/cgroup/io.rs",
+      "sha256": "197a251efa9a1fede454584c7f33a0c363aaeca1f6ee8d034b1773f4045f18aa"
+    },
+    {
+      "source": "apollo-agent/src/cgroup/memory.rs",
+      "destination": "src/cgroup/memory.rs",
+      "sha256": "f190dc532236936faa2acba4ad21cc5143e03120746f59085b96c508ce118b69"
+    },
+    {
+      "source": "apollo-agent/src/cgroup/mod.rs",
+      "destination": "src/cgroup/mod.rs",
+      "sha256": "3af6082b2258d0155629c6edad60d5f8de35253bd3311338b3c2bf1cfda737d0"
+    },
+    {
+      "source": "apollo-agent/src/cgroup/path.rs",
+      "destination": "src/cgroup/path.rs",
+      "sha256": "d4fe7675ca97ef4ef376288f3a6d1363488214161c0588cd242b49121247b822"
+    },
+    {
+      "source": "apollo-agent/src/cgroup/pids.rs",
+      "destination": "src/cgroup/pids.rs",
+      "sha256": "420d7821d9fc6dc7d0df671ba638fb201b871bfeccf12cbff7a1b5cd0942b891"
+    },
+    {
+      "source": "apollo-agent/src/cgroup/pressure.rs",
+      "destination": "src/cgroup/pressure.rs",
+      "sha256": "8c3984338aac24ebdb61083f78b0398223bd08ab382fc868b7596cb246db6852"
+    },
+    {
+      "source": "apollo-agent/src/config.rs",
+      "destination": "src/config.rs",
+      "sha256": "a2a646c31c86afed5d91c7f4147588dcd674e086b1adbf9a92c1d79f409fc914"
+    },
+    {
+      "source": "apollo-agent/src/control/mod.rs",
+      "destination": "src/control/mod.rs",
+      "sha256": "ed2386fad112823a2ba3d109154570df5905a6d18df1bf840952cd18b3d1db81"
+    },
+    {
+      "source": "apollo-agent/src/daemon.rs",
+      "destination": "src/daemon.rs",
+      "sha256": "5f16c37c54965e392bcf0345608264431806a6227d031d26512c1774a3201c63"
+    },
+    {
+      "source": "apollo-agent/src/error.rs",
+      "destination": "src/error.rs",
+      "sha256": "91065c235a4c2bd13cfc6695612d4db110c058c6e7142ed67e1d15551c379950"
+    },
+    {
+      "source": "apollo-agent/src/identity/mod.rs",
+      "destination": "src/identity/mod.rs",
+      "sha256": "79089eb19c28acb723326620cd6253533bfd63db91a07186c4575e3fdc8ca141"
+    },
+    {
+      "source": "apollo-agent/src/lib.rs",
+      "destination": "src/lib.rs",
+      "sha256": "f9c47c2c2f44a70d4333956a0198b3d97ac515ad32eead36a825350fadc51396"
+    },
+    {
+      "source": "apollo-agent/src/logd/forward.rs",
+      "destination": "src/logd/forward.rs",
+      "sha256": "31842ea444b093eda685cb4dc0bc2162e1a11643746a2e371a1214247064f42a"
+    },
+    {
+      "source": "apollo-agent/src/logd/mod.rs",
+      "destination": "src/logd/mod.rs",
+      "sha256": "40973315cf49cccbdd26aac6ef527223cc96d0c1480fad20ea7d6b4c7b0a3379"
+    },
+    {
+      "source": "apollo-agent/src/main.rs",
+      "destination": "src/main.rs",
+      "sha256": "0f3451fd2234c67f12107cbdac46390c4414bc636b9fe49527f0072584627f80"
+    },
+    {
+      "source": "apollo-agent/src/network/mod.rs",
+      "destination": "src/network/mod.rs",
+      "sha256": "e34af78157a17edd4335687c9713fe3462fcea5256d3dcd9b26464a44ba3fef4"
+    },
+    {
+      "source": "apollo-agent/src/session/mod.rs",
+      "destination": "src/session/mod.rs",
+      "sha256": "a20d8e29e176f55525c89c0bb5c93ee8c130ca77e3b3864a48a776b8a11a96ca"
+    },
+    {
+      "source": "apollo-agent/src/session/reload.rs",
+      "destination": "src/session/reload.rs",
+      "sha256": "938f7912fd238daa4531213ac0e990f9fc1d87089ed5a63dd8616f37dbef8152"
+    },
+    {
+      "source": "apollo-agent/src/store.rs",
+      "destination": "src/store.rs",
+      "sha256": "452bed8ed960ab2bb928f25537cdb1c98ad2679fa96f701444e4072739da4530"
+    },
+    {
+      "source": "apollo-agent/src/telemetry/events.rs",
+      "destination": "src/telemetry/events.rs",
+      "sha256": "d1d844d5ab770172ebdcf968939defd2d0a72cc345bdd6952e254481d5c9a48c"
+    },
+    {
+      "source": "apollo-agent/src/telemetry/journal.rs",
+      "destination": "src/telemetry/journal.rs",
+      "sha256": "df3e0474f0ef7d57a06114a208bcf5bf3adb0330cb3ba6e7f0900619512814a8"
+    },
+    {
+      "source": "apollo-agent/src/telemetry/mappings.rs",
+      "destination": "src/telemetry/mappings.rs",
+      "sha256": "406a22928ef21d13edd7ab81556802fadcafc7c4a20c10f7d8d77c33b629cf95"
+    },
+    {
+      "source": "apollo-agent/src/telemetry/mod.rs",
+      "destination": "src/telemetry/mod.rs",
+      "sha256": "e16f8f90ee6b52169d986af298a8b9731b6e8bbd23c752b67a0cd9ff24976d29"
+    },
+    {
+      "source": "apollo-agent/src/telemetry/sampler.rs",
+      "destination": "src/telemetry/sampler.rs",
+      "sha256": "1208866a22ae34f934536a9408e08832a0b7d43f39b6c24e2c23ba59803ff642"
+    },
+    {
+      "source": "apollo-agent/src/telemetry/workers.rs",
+      "destination": "src/telemetry/workers.rs",
+      "sha256": "3711080198266bbff093b83c6acacd7f604a294210002a90a41063ad2c67d6b4"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/Cargo.toml",
+      "destination": "crates/apollo-telemetry-protocol/Cargo.toml",
+      "sha256": "81e9f5a72e1635a145a745b4c006b21b5b10c2cada42993436d988d2d1bba07a"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/src/lib.rs",
+      "destination": "crates/apollo-telemetry-protocol/src/lib.rs",
+      "sha256": "d04d14f7492cc1ccbf3ebd8a177fdba1276e921a9db45d8a3fddaefcc93b8cb1"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/src/local.rs",
+      "destination": "crates/apollo-telemetry-protocol/src/local.rs",
+      "sha256": "691aab0be7451a9701b9571d10d822f17b1f6d4fb2ca9fb515f46e8359103841"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/src/packet.rs",
+      "destination": "crates/apollo-telemetry-protocol/src/packet.rs",
+      "sha256": "4b06245fbc6570dbfc73fe5db79e538ee1424833474949b0748dfd451a496229"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/src/producer.rs",
+      "destination": "crates/apollo-telemetry-protocol/src/producer.rs",
+      "sha256": "544fcefb001c6a7a06bd295214c55b5fdf02d4b8b97911aac6785436c3613c4c"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/src/receiver.rs",
+      "destination": "crates/apollo-telemetry-protocol/src/receiver.rs",
+      "sha256": "197821b5218b36032890ba62f7ae11704ad91313031da0d0e4173d4cdf07bcc9"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/src/record.rs",
+      "destination": "crates/apollo-telemetry-protocol/src/record.rs",
+      "sha256": "e130b06ba7941ac8272fc33952f93d51285b507ec696fd2e01989aeddf19671a"
+    },
+    {
+      "source": "crates/apollo-telemetry-protocol/src/types.rs",
+      "destination": "crates/apollo-telemetry-protocol/src/types.rs",
+      "sha256": "7d98466cde5cc350e0bf27d0756585ca6ed13068f03696ed99523c98252c9792"
+    },
+    {
+      "source": "crates/apollo-node-telemetry-protocol/Cargo.toml",
+      "destination": "crates/apollo-node-telemetry-protocol/Cargo.toml",
+      "sha256": "bb5385e12b9462580f37c522e35ec2eef1eabf54886e7eb4130d854add2d6ee1"
+    },
+    {
+      "source": "crates/apollo-node-telemetry-protocol/build.rs",
+      "destination": "crates/apollo-node-telemetry-protocol/build.rs",
+      "sha256": "585dafd0e1f7e6fd993f485172ad3c12c770ae2a8eb82c6c33954f68e08e6880"
+    },
+    {
+      "source": "crates/apollo-node-telemetry-protocol/src/assignment.rs",
+      "destination": "crates/apollo-node-telemetry-protocol/src/assignment.rs",
+      "sha256": "09d66a728adaf10f366a3415d1f5d0760b0c43678e836340e851d8a0fe890fcd"
+    },
+    {
+      "source": "crates/apollo-node-telemetry-protocol/src/authentication.rs",
+      "destination": "crates/apollo-node-telemetry-protocol/src/authentication.rs",
+      "sha256": "ec346b828f17d981b64070d4feaf34d50d70bbe3b431f8e3e51f5da276fe03d6"
+    },
+    {
+      "source": "crates/apollo-node-telemetry-protocol/src/lib.rs",
+      "destination": "crates/apollo-node-telemetry-protocol/src/lib.rs",
+      "sha256": "ddb2953b33a92b4966ad4ff5b8f6922afc98321d99d65153a27fbbb597c5353d"
+    },
+    {
+      "source": "crates/apollo-node-telemetry-protocol/src/request.rs",
+      "destination": "crates/apollo-node-telemetry-protocol/src/request.rs",
+      "sha256": "1b632415d8e8a18ef8a9db8e64178d5d09e83eaee634a5158781caebcd7cfcf1"
+    },
+    {
+      "source": "crates/apollo-node-telemetry-protocol/src/validation.rs",
+      "destination": "crates/apollo-node-telemetry-protocol/src/validation.rs",
+      "sha256": "1c9647c7a8a47bb58be8ca0cba1267c23e49b56bdd480356f0c15c63a9dac932"
+    },
+    {
+      "source": "crates/apollo-domain/Cargo.toml",
+      "destination": "crates/apollo-domain/Cargo.toml",
+      "sha256": "330965f232c3668249d22902a0b5675136b70b802e1480c8a9649c6a6cf5092e"
+    },
+    {
+      "source": "crates/apollo-domain/src/ids.rs",
+      "destination": "crates/apollo-domain/src/ids.rs",
+      "sha256": "892ff90ae77746e1c82580720ecf7af067c75f2ac7aa5a53b0428d7bf1cd69db"
+    },
+    {
+      "source": "crates/apollo-domain/src/error.rs",
+      "destination": "crates/apollo-domain/src/error.rs",
+      "sha256": "3ba402eddf3f4e5aa43a2449f8ce526be1def025714c8b29e807467f5d805248"
+    },
+    {
+      "source": "rust-toolchain.toml",
+      "destination": "rust-toolchain.toml",
+      "sha256": "6a3177dca3783745b00765ea571974808dad2644947fc0a8df5927048edf13a5"
+    },
+    {
+      "source": "schemas/protobuf/apollo/telemetry/v1/telemetry.proto",
+      "destination": "schemas/protobuf/apollo/telemetry/v1/telemetry.proto",
+      "sha256": "b94bb85a6e444824b1f1dabbf392202646bdc585f9288b75328cce8d15ba301d"
+    },
+    {
+      "source": "apollo-agent/examples/peer_qualification.rs",
+      "destination": "examples/peer_qualification.rs",
+      "sha256": "b3721d5f00e5909d176bdf61a374b402565e8631103ea1582af45c42fbfe8121"
+    },
+    {
+      "source": "deploy/agent/apollo-agent.service",
+      "destination": "deploy/apollo-agent.service",
+      "sha256": "8307d6e2a849011b3b1fa8e323c55c52a516b13e07941b84a7565079cd1ffb5e"
+    },
+    {
+      "source": "deploy/agent/configure-logd-peer.py",
+      "destination": "deploy/configure-logd-peer.py",
+      "sha256": "64f195e088e747dc703c2127ebfe8d2fdce107d037ca13d4378d762413459458"
+    }
+  ]
+}

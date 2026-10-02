@@ -1,0 +1,21 @@
+[package]
+name = "apollo-node-telemetry-protocol"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+apollo-domain = { path = "../apollo-domain", version = "=0.1.0" }
+apollo-telemetry-protocol = { path = "../apollo-telemetry-protocol", version = "=0.1.0" }
+ed25519-dalek.workspace = true
+prost.workspace = true
+thiserror.workspace = true
+
+[build-dependencies]
+prost-build.workspace = true
+protoc-bin-vendored.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,42 @@
+[Unit]
+Description=Apollo provider-neutral node telemetry agent
+Wants=network-online.target apollo-logd.service
+After=network-online.target apollo-logd.service
+RequiresMountsFor=/var/lib/apollo-agent
+StartLimitIntervalSec=120
+StartLimitBurst=10
+
+[Service]
+Type=simple
+User=root
+Group=root
+SupplementaryGroups=apollo-logd
+ExecStart=/opt/apollo-agent/bin/apollo-agent run /etc/apollo-agent/config.json
+Restart=on-failure
+RestartSec=3s
+TimeoutStopSec=15s
+KillMode=control-group
+UMask=0077
+StateDirectory=apollo-agent
+StateDirectoryMode=0700
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=strict
+ProtectControlGroups=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+ReadWritePaths=/var/lib/apollo-agent
+MemoryAccounting=true
+MemoryHigh=40M
+MemoryMax=64M
+TasksMax=16
+LimitNOFILE=8192
+
+[Install]
+WantedBy=multi-user.target
