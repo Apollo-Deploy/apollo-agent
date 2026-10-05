@@ -1,4 +1,3 @@
-use super::operations::finish_artifact;
 use super::*;
 
 pub(super) async fn settle_sandbox(
@@ -55,13 +54,7 @@ pub(super) async fn recover_pending(
     pending: PendingOperation,
 ) -> Result<()> {
     if pending.daemon == "artifactd" {
-        let client = artifactd::Client::from_config(config);
-        let client2 = client.clone();
-        let operation_id = pending.operation_id.clone();
-        let value = tokio::task::spawn_blocking(move || client2.execute_pending(&pending))
-            .await
-            .map_err(|_| Error::Transport)??;
-        return finish_artifact(store, &operation_id, &value);
+        return operations::run_artifact_pending(config, store, pending).await;
     }
     let client = sandboxd::Client::from_config(config);
     let receipt = client
@@ -136,15 +129,9 @@ async fn inspect_pending_effect(
     let authority = authority_for(&state, &pending.workload_id, pending.generation)?.clone();
     let resources = resources_for(&state, &pending.workload_id, pending.generation)?.clone();
     match pending.action.as_str() {
-        "import_image" => {
-            let Some(digest) = resources.manifest_digest.as_deref() else {
-                return Ok(None);
-            };
-            Ok(client
-                .image_inspect(digest)
-                .await?
-                .map(|body| json!({"response":"image","body":body})))
-        }
+        // The global content-addressed cache cannot prove this operation consumed
+        // its workload-scoped artifact lease. Replay the exact sandboxd request.
+        "import_image" => Ok(None),
         "create_sandbox"
         | "start_sandbox"
         | "stop_sandbox"

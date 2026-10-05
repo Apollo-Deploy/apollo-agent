@@ -315,7 +315,7 @@ pub(super) fn finish_artifact(store: &Store, operation_id: &str, value: &Value) 
     })
 }
 
-async fn run_artifact_pending(
+pub(super) async fn run_artifact_pending(
     config: &WorkloadConfig,
     store: &Store,
     pending: PendingOperation,
