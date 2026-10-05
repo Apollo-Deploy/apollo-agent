@@ -8,6 +8,9 @@ pub mod validation;
 pub mod wire {
     include!(concat!(env!("OUT_DIR"), "/apollo.telemetry.v1.rs"));
 }
+pub mod workload_wire {
+    include!(concat!(env!("OUT_DIR"), "/apollo.workload.v1.rs"));
+}
 pub const PROTOCOL_MAJOR: u32 = 1;
 pub const MAX_FRAME_BYTES: usize = 262_144;
 pub const MAX_WORKLOADS: usize = 1_024;

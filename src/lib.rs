@@ -1,4 +1,4 @@
-//! Linux telemetry agent. Existing signed Node V2 remains lifecycle authority.
+//! Linux node agent for signed workload reconciliation and telemetry relay.
 #![forbid(unsafe_code)]
 pub mod cgroup;
 pub mod config;
@@ -11,6 +11,7 @@ pub mod network;
 pub mod session;
 pub mod store;
 pub mod telemetry;
+pub mod workload;
 pub use error::{Error, Result};
 
 pub fn unix_ms() -> i64 {

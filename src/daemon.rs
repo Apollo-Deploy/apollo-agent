@@ -163,9 +163,31 @@ pub async fn run(config_path: &Path) -> Result<()> {
     ));
     let mut heartbeat_task =
         tokio::spawn(workers::heartbeat(session.clone(), journal, health, count));
-    eprintln!(
-        "apollo-agent started; telemetry mappings={count}; lifecycle authority remains Apollo Node V2"
-    );
+    let mut workload_task = config.workload.clone().map(|workload_config| {
+        tokio::spawn(crate::workload::control::run(
+            session.client.clone(),
+            identity.clone(),
+            control_root,
+            workload_config,
+            config.state_directory.clone(),
+        ))
+    });
+    if config.workload.is_some() {
+        eprintln!(
+            "apollo-agent started; telemetry mappings={count}; workload authority is enabled"
+        );
+    } else {
+        eprintln!(
+            "apollo-agent started; telemetry mappings={count}; lifecycle authority remains Apollo Node V2"
+        );
+    }
+    let workload_exit = async {
+        if let Some(task) = workload_task.as_mut() {
+            task.await.map_err(|_| Error::Transport)?
+        } else {
+            std::future::pending::<Result<()>>().await
+        }
+    };
     let outcome = tokio::select! {
         _ = shutdown() => Ok(()),
         _ = &mut metric_task => Err(Error::Transport),
@@ -173,8 +195,12 @@ pub async fn run(config_path: &Path) -> Result<()> {
         _ = &mut heartbeat_task => Err(Error::Transport),
         result = authority_watch.changed() => result,
         result = live_watch => result,
+        result = workload_exit => result,
     };
     stop.store(true, Ordering::Relaxed);
+    if let Some(task) = workload_task.take() {
+        task.abort();
+    }
     metric_task.abort();
     event_task.abort();
     heartbeat_task.abort();

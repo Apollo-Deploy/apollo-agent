@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package apollo.workload.v1;
+
+// This protocol carries executable node authority. It is deliberately separate
+// from apollo.telemetry.v1.WorkloadAssignment.
+message AuthorityRequest {
+  uint32 protocol_major = 1;
+  string request_id = 2;
+  string node_id = 3;
+  string organization_id = 4;
+  string provider_environment = 5;
+  uint64 credential_generation = 6;
+  uint64 last_control_revision = 7;
+  int64 sent_at_unix_ms = 8;
+  bytes signature = 15;
+}
+
+message AuthoritySnapshot {
+  uint32 protocol_major = 1;
+  string request_id = 2;
+  string node_id = 3;
+  string organization_id = 4;
+  string provider_environment = 5;
+  uint64 credential_generation = 6;
+  uint64 control_revision = 7;
+  int64 issued_at_unix_ms = 8;
+  int64 expires_at_unix_ms = 9;
+  repeated Workload workloads = 10;
+  bytes signature = 15;
+}
+
+message Workload {
+  string organization_id = 1;
+  string project_id = 2;
+  string environment_id = 3;
+  string workload_id = 4;
+  string placement_id = 5;
+  string deployment_id = 6;
+  string release_id = 7;
+  uint64 generation = 8;
+  string artifact_digest = 9;
+  DesiredLifecycle desired_lifecycle = 10;
+  bytes desired_state_hash = 11;
+  int64 issued_at_unix_ms = 12;
+  int64 expires_at_unix_ms = 13;
+  ResourceLimits resources = 14;
+  repeated string argv = 15;
+  bool use_image_defaults = 16;
+  uint32 uid = 17;
+  uint32 gid = 18;
+  uint32 max_processes = 19;
+  string working_directory = 20;
+  repeated Port ports = 21;
+  HealthPolicy health_policy = 22;
+  string kernel_profile = 23;
+  string runtime_profile = 24;
+  map<string, string> environment = 25;
+  repeated string secret_references = 26;
+}
+
+enum DesiredLifecycle {
+  DESIRED_LIFECYCLE_UNSPECIFIED = 0;
+  DESIRED_LIFECYCLE_RUNNING = 1;
+  DESIRED_LIFECYCLE_ABSENT = 2;
+}
+
+message ResourceLimits {
+  uint32 vcpus = 1;
+  uint32 memory_mib = 2;
+  uint32 state_disk_mib = 3;
+  uint64 host_memory_max_bytes = 4;
+  uint32 cpu_quota_us = 5;
+  uint32 cpu_period_us = 6;
+}
+
+message Port {
+  uint32 protocol = 1;
+  uint32 container_port = 2;
+  uint32 host_port = 3;
+}
+
+enum HealthPolicy {
+  HEALTH_POLICY_UNSPECIFIED = 0;
+  HEALTH_POLICY_PROCESS_ALIVE = 1;
+  HEALTH_POLICY_HTTP = 2;
+}
+
+message WorkloadObservation {
+  string node_id = 1;
+  string organization_id = 2;
+  uint64 credential_generation = 3;
+  string workload_id = 4;
+  string placement_id = 5;
+  uint64 generation = 6;
+  bytes desired_state_hash = 7;
+  uint64 control_revision = 8;
+  string sandbox_id = 9;
+  int64 observed_at_unix_ms = 10;
+  ObservedState state = 11;
+  ProcessHealth process_health = 12;
+  string reason_code = 13;
+  uint64 observation_revision = 14;
+}
+
+enum ObservedState {
+  OBSERVED_STATE_UNSPECIFIED = 0;
+  OBSERVED_STATE_PENDING = 1;
+  OBSERVED_STATE_PREPARING = 2;
+  OBSERVED_STATE_STARTING = 3;
+  OBSERVED_STATE_RUNNING = 4;
+  OBSERVED_STATE_STOPPING = 5;
+  OBSERVED_STATE_STOPPED = 6;
+  OBSERVED_STATE_FAILED = 7;
+}
+
+enum ProcessHealth {
+  PROCESS_HEALTH_UNKNOWN = 0;
+  PROCESS_HEALTH_ALIVE = 1;
+  PROCESS_HEALTH_EXITED = 2;
+}
+
+message ObservationFrame {
+  uint32 protocol_major = 1;
+  string request_id = 2;
+  string node_id = 3;
+  uint64 credential_generation = 4;
+  int64 sent_at_unix_ms = 5;
+  repeated WorkloadObservation observations = 6;
+  bytes signature = 15;
+}
+
+message ObservationAck {
+  uint32 protocol_major = 1;
+  string request_id = 2;
+  string node_id = 3;
+  uint64 credential_generation = 4;
+  uint64 accepted_through_revision = 5;
+  int64 issued_at_unix_ms = 6;
+  bytes signature = 15;
+}

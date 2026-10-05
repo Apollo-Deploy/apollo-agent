@@ -11,5 +11,6 @@
   "logd_uid": null,
   "logd_gid": null,
   "sample_interval_ms": 1000,
-  "assignment_source": "control_plane"
+  "assignment_source": "control_plane",
+  "workload": null
 }

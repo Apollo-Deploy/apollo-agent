@@ -8,6 +8,12 @@ pub enum Error {
     Identity,
     #[error("runtime mapping rejected")]
     Mapping,
+    #[error("workload authority is stale or fenced")]
+    StaleAuthority,
+    #[error("workload durable state is invalid")]
+    WorkloadState,
+    #[error("workload daemon protocol or peer rejected")]
+    WorkloadDaemon,
     #[error("kernel counters unavailable or invalid")]
     Counters,
     #[error("telemetry transport unavailable")]

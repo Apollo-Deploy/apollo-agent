@@ -32,6 +32,8 @@ impl Drop for Bundle {
 
 pub struct Identity {
     pub node_id: String,
+    pub organization_id: String,
+    pub provider_environment: String,
     pub credential_generation: u64,
     pub control_url: String,
     pub expires_at_unix_s: i64,
@@ -77,6 +79,8 @@ impl Identity {
         let key = credential_key(credentials.expose_secret())?;
         Ok(Self {
             node_id: std::mem::take(&mut raw.node_id),
+            organization_id: std::mem::take(&mut raw.organization_id),
+            provider_environment: std::mem::take(&mut raw.environment),
             credential_generation: raw.credential_generation,
             control_url: std::mem::take(&mut raw.control_url),
             expires_at_unix_s: raw.expires_at_unix_s,
